@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tigom_app/pages/home.dart';
-
+import 'package:tigom_app/pages/login.dart';
 void main() {
   runApp( const MyApp() );
 }
@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         fontFamily: 'RuslanDisplay'
       ),
-      home: const HomePage()
+      home: const LoginPage()
     ); // MaterialApp
   }
 }
