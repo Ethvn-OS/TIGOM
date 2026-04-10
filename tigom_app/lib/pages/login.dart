@@ -1,8 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/gestures.dart'; 
 
-class LoginPage extends StatelessWidget {
+class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
 
+@override
+  State<LoginPage> createState() => _LoginPageState();
+}
+
+
+class _LoginPageState extends State<LoginPage> {
+  bool _obscurePassword = true; 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,7 +37,7 @@ class LoginPage extends StatelessWidget {
                   style: TextStyle(
                     fontSize: 70,
                     fontWeight: FontWeight.w900,
-                    color: Colors.white,
+                    color:  Color(0xFFFFF9E9),
                     letterSpacing: 6,
                     shadows: [
                       Shadow(
@@ -81,7 +89,7 @@ class LoginPage extends StatelessWidget {
                         style: TextStyle(
                           fontFamily: 'Amarante',
                           color: const Color(0xFF1D3867),
-                          fontSize: 28,
+                          fontSize: 48,
                           fontWeight: FontWeight.bold,
                           letterSpacing: 4,
                         ),
@@ -91,6 +99,10 @@ class LoginPage extends StatelessWidget {
 
                      
                       TextField(
+                        style: TextStyle(
+                          fontFamily: 'Amarante',
+                          color: const Color(0xFF1D3867),
+                        ),
                         decoration: InputDecoration(
                           labelText: 'Username',
                           labelStyle: TextStyle( 
@@ -109,7 +121,11 @@ class LoginPage extends StatelessWidget {
 
                       
                       TextField(
-                        obscureText: true,
+                        obscureText: _obscurePassword,
+                        style: TextStyle(
+                          fontFamily: 'Amarante',
+                          color: const Color(0xFF1D3867),
+                        ),
                         decoration: InputDecoration(
                           labelText: 'Password',
                           labelStyle: TextStyle(
@@ -120,6 +136,19 @@ class LoginPage extends StatelessWidget {
                             borderRadius: BorderRadius.circular(30),
                             borderSide: BorderSide(color: Color(0xFF1D3867)),
                           ),
+                          suffixIcon: IconButton(
+                            icon: Icon(
+                              _obscurePassword
+                                  ? Icons.visibility_off_outlined
+                                  : Icons.visibility_outlined,
+                              color: Color(0xFF1D3867),
+                            ),
+                            onPressed: () {
+                              setState(() {
+                                _obscurePassword = !_obscurePassword;
+                              });
+                            },
+                          ),
                         ),
                       ),
 
@@ -128,7 +157,9 @@ class LoginPage extends StatelessWidget {
                       SizedBox(
                         width: double.infinity,
                         child: ElevatedButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.pushNamed(context, '/home');
+                          },
                           style: ElevatedButton.styleFrom(
                             backgroundColor: const Color(0xFF1D3867),
                             padding: const EdgeInsets.symmetric(vertical: 16),
@@ -140,6 +171,7 @@ class LoginPage extends StatelessWidget {
                               letterSpacing: 3,
                               color: Color(0xFFFFF9E9),
                               fontFamily: 'Amarante',
+                              fontSize: 16,
                             ),
                           ),
                         ),
@@ -160,6 +192,10 @@ class LoginPage extends StatelessWidget {
                             children: [
                               TextSpan(
                                 text: "Sign Up",
+                                recognizer: TapGestureRecognizer()
+                                ..onTap = (){
+                                  Navigator.pushNamed(context, '/signup');
+                                },
                                 style: TextStyle(
                                   color: Colors.red,
                                   fontWeight: FontWeight.bold,

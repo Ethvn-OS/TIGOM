@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:tigom_app/pages/home.dart';
 import 'package:tigom_app/pages/login.dart';
+import 'package:tigom_app/pages/signup.dart';
+
 void main() {
-  runApp( const MyApp() );
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -13,9 +15,14 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        fontFamily: 'RuslanDisplay'
+        fontFamily: 'RuslanDisplay',
       ),
-      home: const LoginPage()
-    ); // MaterialApp
+      initialRoute: '/login',
+      routes: {
+        '/login': (context) => const LoginPage(),
+        '/home': (context) => const HomePage(),
+        '/signup': (context) => const SignUpPage(),
+      },
+    );
   }
 }
