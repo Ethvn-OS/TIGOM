@@ -13,7 +13,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        fontFamily: 'RuslanDisplay'
+        fontFamily: 'Amarante'
       ),
       home: const HomePage()
     ); // MaterialApp
