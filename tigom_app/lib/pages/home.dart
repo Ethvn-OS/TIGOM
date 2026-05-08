@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:tigom_app/pages/plans.dart';
+import 'package:tigom_app/data/goals_data.dart';
+import 'package:tigom_app/models/goal.dart';
+import 'package:tigom_app/widgets/goalwidgets.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -40,15 +44,7 @@ class _HomePageState extends State<HomePage> {
   // For Goals Box
   int currentGoalIndex = 0;
 
-  final List<Map<String, String>> goals = [
-    {
-      'name': 'Laag sa Singapore',
-      'amount': '1,500.00',
-      'spent': '500.00',
-      'description': 'Travel to Singapore',
-    },
-    // More goals here
-  ];
+  final List<Goal> goals = goalsData;
 
   void nextGoal() {
     if (currentGoalIndex < goals.length) {
@@ -295,143 +291,20 @@ class _HomePageState extends State<HomePage> {
         backgroundColor: Color(0XFF1d3867),
         selectedItemColor: Colors.white,
         unselectedItemColor: Colors.grey,
+        currentIndex: 0,
+        onTap: (index) {
+          if (index == 1) {
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (_) => PlansPage(goals: goals)),
+            );
+          }
+        },
         items: const [
         BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
         BottomNavigationBarItem(icon: Icon(Icons.add_road), label: 'Plans'),
         BottomNavigationBarItem(icon: Icon(Icons.access_time), label: 'History'),
         BottomNavigationBarItem(icon: Icon(Icons.face), label: 'Profile'),
-        ],
-      ),
-    );
-  }
-}
-
-class GoalContent extends StatelessWidget {
-  final Map<String, String> goal;
-
-  const GoalContent({super.key, required this.goal});
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(0, 12, 8, 0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              const Icon(Icons.calendar_month, size: 18, color: Color(0xFF1D3867)),
-              const SizedBox(width: 6),
-              const Expanded(
-                child: Text(
-                  'Current date\nJanuary 26, 2025',
-                  style: TextStyle(fontSize: 12, color: Color(0xFF1D3867)),
-                ),
-              ),
-              const Icon(Icons.flag, size: 18, color: Color(0xFF1D3867)),
-              const SizedBox(width: 6),
-              const Expanded(
-                child: Text(
-                  'Goal Date\nJanuary 21, 2026',
-                  style: TextStyle(fontSize: 12, color: Color(0xFF1D3867)),
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 8),
-          Row(
-            children: [
-              Expanded(
-                child: Center(
-                  child: Text(
-                    goal['name'] ?? 'Laag sa Singapore',
-                    style: const TextStyle(
-                      fontSize: 28,
-                      color: Color(0xFF1D3867),
-                      fontWeight: FontWeight.w600,
-                    ),
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 8),
-          Row(
-            children: const [
-              Text(
-                '40.234%',
-                style: TextStyle(
-                  fontSize: 14,
-                  color: Color(0xFFE2520B),
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-              Spacer(),
-              Text(
-                '3000.00/7500.00',
-                style: TextStyle(
-                  fontSize: 14,
-                  color: Color(0xFFC9A15A),
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 6),
-          ClipRRect(
-            borderRadius: BorderRadius.circular(999),
-            child: LinearProgressIndicator(
-              value: 0.40234,
-              minHeight: 10,
-              backgroundColor: const Color(0xFFF7E6BF),
-              valueColor: const AlwaysStoppedAnimation<Color>(Color(0xFFC63A2B)),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class AddNewGoalContent extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          const Text(
-            'Add a New Goal',
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              fontSize: 30,
-              fontWeight: FontWeight.w500,
-              color: Color(0xFF1D3867),
-            ),
-          ),
-          const SizedBox(height: 14),
-          Container(
-            width: 190,
-            height: 34,
-            decoration: BoxDecoration(
-              color: const Color(0xFFF9F1D8),
-              borderRadius: BorderRadius.circular(20),
-              border: Border.all(
-                color: const Color(0xFF1D3867),
-                width: 1.5,
-              ),
-            ),
-            child: const Center(
-              child: Icon(
-                Icons.add,
-                size: 22,
-                color: Color(0xFF1D3867),
-              ),
-            ),
-          ),
         ],
       ),
     );
