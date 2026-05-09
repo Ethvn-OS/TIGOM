@@ -15,11 +15,8 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-<<<<<<< HEAD
-        fontFamily: 'RuslanDisplay',
-=======
-        fontFamily: 'Amarante'
->>>>>>> main
+        fontFamily: 'Amarante',
+        
       ),
       initialRoute: '/login',
       routes: {

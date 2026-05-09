@@ -83,10 +83,12 @@ flutter:
     - family: RuslanDisplay
       fonts:
         - asset: fonts/RuslanDisplay-Regular.ttf
+          weight: 400
 
     - family: Amarante
       fonts:
         - asset: fonts/Amarante-Regular.ttf
+        - weight: 400
   #   - family: Trajan Pro
   #     fonts:
   #       - asset: fonts/TrajanPro.ttf
