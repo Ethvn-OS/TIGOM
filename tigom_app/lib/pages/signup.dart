@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 class SignUpPage extends StatefulWidget {
   const SignUpPage({super.key});
@@ -9,6 +10,10 @@ class SignUpPage extends StatefulWidget {
 
 class _SignUpPageState extends State<SignUpPage> {
   bool _obscurePassword = true; 
+  final TextEditingController usernameController = TextEditingController();
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+  final TextEditingController confirmPasswordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -51,6 +56,7 @@ class _SignUpPageState extends State<SignUpPage> {
 
             const SizedBox(height: 48),
             TextField(
+              controller: usernameController,
               style: TextStyle(
                 color: const Color(0xFF1D3867),
                 fontFamily: 'Amarante',
@@ -78,6 +84,7 @@ class _SignUpPageState extends State<SignUpPage> {
             //email
             const SizedBox(height: 30),
             TextField(
+              controller: emailController,
               style: TextStyle(
                 color: Color(0xFF1D3867),
                 fontFamily: 'Amarante',
@@ -102,6 +109,7 @@ class _SignUpPageState extends State<SignUpPage> {
 
             const SizedBox(height: 30),
             TextField(
+              controller: passwordController,
               obscureText: _obscurePassword,
               style: TextStyle(
                 color: Color(0xFF1D3867),
@@ -141,6 +149,7 @@ class _SignUpPageState extends State<SignUpPage> {
 
             const SizedBox(height: 30),
             TextField(
+              controller: confirmPasswordController,
               obscureText: _obscurePassword,
               style: TextStyle(
                 color: Color(0xFF1D3867),
@@ -181,8 +190,44 @@ class _SignUpPageState extends State<SignUpPage> {
             SizedBox(
               width: double.infinity,
               child: ElevatedButton(
-                onPressed: (){
+                onPressed: ()async{
+                  if(passwordController.text != confirmPasswordController.text){
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text("Passwords do not match."),
+                        ),
+                      );
+                      return;
+                  }
+
+                  try{
+
+                   await Supabase.instance.client.auth.signUp(
+                    email: emailController.text.trim(),
+                    password: passwordController.text.trim(),
+
+                    data: {
+                      'username': usernameController.text.trim(),
+                    },
+                  );
+
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text("Account created successfully"),
+                    ),
+                  );
+
                   Navigator.pushNamed(context, '/login');
+
+                } catch (e) {
+
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text(e.toString()),
+                    ),
+                  );
+                }
+
                 },
               style: ElevatedButton.styleFrom(
                 backgroundColor: Color(0xFF1D3867),

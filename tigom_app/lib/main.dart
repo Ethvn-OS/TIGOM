@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:tigom_app/pages/home.dart';
 import 'package:tigom_app/pages/login.dart';
 import 'package:tigom_app/pages/signup.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 void main() {
   runApp(const MyApp());
