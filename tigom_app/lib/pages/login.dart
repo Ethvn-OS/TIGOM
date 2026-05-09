@@ -12,7 +12,7 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   bool _obscurePassword = true; 
-  final TextEditingController usernameController = TextEditingController();
+  final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   @override
   Widget build(BuildContext context) {
@@ -102,12 +102,13 @@ class _LoginPageState extends State<LoginPage> {
 
                      
                       TextField(
+                        controller: emailController,
                         style: TextStyle(
                           fontFamily: 'Amarante',
                           color: const Color(0xFF1D3867),
                         ),
                         decoration: InputDecoration(
-                          labelText: 'Username',
+                          labelText: 'Email',
                           labelStyle: TextStyle( 
                             color: const Color(0xFF1D3867),
                             fontFamily: 'Amarante',
@@ -124,6 +125,7 @@ class _LoginPageState extends State<LoginPage> {
 
                       
                       TextField(
+                        controller: passwordController,
                         obscureText: _obscurePassword,
                         style: TextStyle(
                           fontFamily: 'Amarante',
@@ -160,9 +162,27 @@ class _LoginPageState extends State<LoginPage> {
                       SizedBox(
                         width: double.infinity,
                         child: ElevatedButton(
-                          onPressed: () {
-                            Navigator.pushNamed(context, '/home');
-                          },
+                          onPressed: () async {
+
+                              try {
+
+                                await Supabase.instance.client.auth.signInWithPassword(
+                                  email: emailController.text.trim(),
+                                  password: passwordController.text.trim(),
+                                );
+
+                                Navigator.pushNamed(context, '/home');
+
+                              } catch (e) {
+
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    content: Text("Invalid email or password"),
+                                  ),
+                                );
+                              }
+                            },
+
                           style: ElevatedButton.styleFrom(
                             backgroundColor: const Color(0xFF1D3867),
                             padding: const EdgeInsets.symmetric(vertical: 16),
