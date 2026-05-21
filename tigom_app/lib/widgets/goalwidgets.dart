@@ -15,20 +15,23 @@ class GoalContent extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Icon(Icons.calendar_month, size: 18, color: Color(0xFF1D3867)),
-              SizedBox(width: 6),
+              const Icon(Icons.calendar_month,
+                  size: 18, color: Color(0xFF1D3867)),
+              const SizedBox(width: 6),
               Expanded(
                 child: Text(
                   'Current date\n${goal.currentDate}',
-                  style: TextStyle(fontSize: 12, color: Color(0xFF1D3867)),
+                  style: const TextStyle(
+                      fontSize: 12, color: Color(0xFF1D3867)),
                 ),
               ),
-              Icon(Icons.flag, size: 18, color: Color(0xFF1D3867)),
-              SizedBox(width: 6),
+              const Icon(Icons.flag, size: 18, color: Color(0xFF1D3867)),
+              const SizedBox(width: 6),
               Expanded(
                 child: Text(
                   'Goal Date\n${goal.goalDate}',
-                  style: TextStyle(fontSize: 12, color: Color(0xFF1D3867)),
+                  style: const TextStyle(
+                      fontSize: 12, color: Color(0xFF1D3867)),
                 ),
               ),
             ],
@@ -54,19 +57,19 @@ class GoalContent extends StatelessWidget {
           ),
           const SizedBox(height: 8),
           Row(
-            children: const [
+            children: [
               Text(
-                '40.234%',
-                style: TextStyle(
+                goal.progressLabel,
+                style: const TextStyle(
                   fontSize: 14,
                   color: Color(0xFFE2520B),
                   fontWeight: FontWeight.w600,
                 ),
               ),
-              Spacer(),
+              const Spacer(),
               Text(
-                '3000.00/7500.00',
-                style: TextStyle(
+                goal.amountLabel,
+                style: const TextStyle(
                   fontSize: 14,
                   color: Color(0xFFC9A15A),
                 ),
@@ -76,11 +79,12 @@ class GoalContent extends StatelessWidget {
           const SizedBox(height: 6),
           ClipRRect(
             borderRadius: BorderRadius.circular(999),
-            child: const LinearProgressIndicator(
-              value: 0.40234,
+            child: LinearProgressIndicator(
+              value: goal.progressPercent,
               minHeight: 10,
-              backgroundColor: Color(0xFFF7E6BF),
-              valueColor: AlwaysStoppedAnimation<Color>(Color(0xFFC63A2B)),
+              backgroundColor: const Color(0xFFF7E6BF),
+              valueColor: const AlwaysStoppedAnimation<Color>(
+                  Color(0xFFC63A2B)),
             ),
           ),
         ],
@@ -90,7 +94,8 @@ class GoalContent extends StatelessWidget {
 }
 
 class AddNewGoalContent extends StatelessWidget {
-  const AddNewGoalContent({super.key});
+  final VoidCallback? onTap;
+  const AddNewGoalContent({super.key, this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -110,22 +115,21 @@ class AddNewGoalContent extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 14),
-          Container(
-            width: 190,
-            height: 34,
-            decoration: BoxDecoration(
-              color: const Color(0xFFF9F1D8),
-              borderRadius: BorderRadius.circular(20),
-              border: Border.all(
-                color: const Color(0xFF1D3867),
-                width: 1.5,
+          GestureDetector(
+            onTap: onTap,
+            child: Container(
+              width: 190,
+              height: 34,
+              decoration: BoxDecoration(
+                color: const Color(0xFFF9F1D8),
+                borderRadius: BorderRadius.circular(20),
+                border: Border.all(
+                  color: const Color(0xFF1D3867),
+                  width: 1.5,
+                ),
               ),
-            ),
-            child: const Center(
-              child: Icon(
-                Icons.add,
-                size: 22,
-                color: Color(0xFF1D3867),
+              child: const Center(
+                child: Icon(Icons.add, size: 22, color: Color(0xFF1D3867)),
               ),
             ),
           ),
