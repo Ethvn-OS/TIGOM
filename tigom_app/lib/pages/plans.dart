@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:tigom_app/pages/home.dart';
 import 'package:tigom_app/models/goal.dart';
 import 'package:tigom_app/widgets/goalwidgets.dart';
+import 'package:tigom_app/pages/history.dart';
 
 class PlansPage extends StatelessWidget {
   final List<Goal> goals;
@@ -66,6 +67,12 @@ class PlansPage extends StatelessWidget {
             Navigator.pushReplacement(
               context,
               MaterialPageRoute(builder: (_) => HomePage()),
+            );
+          }
+          if (index == 2) {
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (_) => const HistoryPage()),
             );
           }
         },

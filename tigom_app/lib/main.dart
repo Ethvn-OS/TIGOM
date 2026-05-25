@@ -4,6 +4,7 @@ import 'package:tigom_app/pages/login.dart';
 import 'package:tigom_app/pages/signup.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:tigom_app/pages/profile.dart';
+import 'package:tigom_app/pages/history.dart';
 
 Future<void> main() async {
 
@@ -36,6 +37,7 @@ class MyApp extends StatelessWidget {
         '/home': (context) => const HomePage(),
         '/signup': (context) => const SignUpPage(),
         '/profile': (context) => const EditProfilePage(),
+        '/history': (context) => const HistoryPage(),
       },
     );
   }

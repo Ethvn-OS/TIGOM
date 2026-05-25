@@ -5,6 +5,7 @@ import 'package:tigom_app/models/goal.dart';
 import 'package:tigom_app/widgets/goalwidgets.dart';
 import 'package:tigom_app/pages/profile.dart';
 import 'package:tigom_app/widgets/spendings_card.dart';
+import 'package:tigom_app/pages/history.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -321,6 +322,12 @@ class _HomePageState extends State<HomePage> {
               context,
               MaterialPageRoute(builder: (_) => PlansPage(goals: goals)),
             );
+          if (index == 2) {
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (_) => const HistoryPage()),
+            );
+          }
           }
           if (index == 3) {
             Navigator.pushReplacement(

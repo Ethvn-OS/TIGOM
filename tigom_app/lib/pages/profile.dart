@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tigom_app/pages/plans.dart';
 import 'package:tigom_app/data/goals_data.dart';
+import 'package:tigom_app/pages/history.dart';
 
 class EditProfilePage extends StatefulWidget {
   const EditProfilePage({super.key});
@@ -165,6 +166,12 @@ class _EditProfilePageState extends State<EditProfilePage> {
             );
           }
 
+          if (index == 2) {
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (_) => const HistoryPage()),
+            );
+          }
 
           if (index == 3) {
             Navigator.pushReplacement(
