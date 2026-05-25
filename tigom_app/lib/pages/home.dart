@@ -6,6 +6,7 @@ import 'package:tigom_app/pages/profile.dart';
 import 'package:tigom_app/widgets/spendings_card.dart';
 import 'package:tigom_app/services/supabase_service.dart';
 import 'package:uuid/uuid.dart';
+import 'package:tigom_app/pages/history.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -445,6 +446,7 @@ class _HomePageState extends State<HomePage> {
       backgroundColor: const Color(0xFFfff9e9),
       appBar: AppBar(
         toolbarHeight: 100,
+        automaticallyImplyLeading: false,
         title: const Text(
           'TIGOM',
           style: TextStyle(
@@ -694,7 +696,7 @@ class _HomePageState extends State<HomePage> {
 
             // Spendings Card
             const SizedBox(height: 24),
-            const SpendingsCard(),
+            SpendingsCard(budget: getCurrentBalance()),
             const SizedBox(height: 24),
           ],
         ),
@@ -718,6 +720,14 @@ class _HomePageState extends State<HomePage> {
               context,
               MaterialPageRoute(
                   builder: (_) => const EditProfilePage()),
+            );
+          }
+
+          if (index == 2) {
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                  builder: (_) => const HistoryPage()),
             );
           }
         },

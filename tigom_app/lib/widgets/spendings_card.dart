@@ -3,7 +3,8 @@ import 'package:tigom_app/services/supabase_service.dart';
 import 'dart:math';
 
 class SpendingsCard extends StatefulWidget {
-  const SpendingsCard({super.key});
+  final double budget;
+  const SpendingsCard({super.key, required this.budget});
 
   @override
   State<SpendingsCard> createState() => _SpendingsCardState();
@@ -126,7 +127,7 @@ class _SpendingsCardState extends State<SpendingsCard> {
   Widget build(BuildContext context) {
     final categories = categoryTotals.entries.toList();
     final grandTotal = categoryTotals.values.fold(0.0, (a, b) => a + b);
-    const double budget = 15000;
+    final budget = widget.budget; // ← uses current balance from HomePage
 
     // % change from last month
     double percentChange = 0;
@@ -263,8 +264,9 @@ class _SpendingsCardState extends State<SpendingsCard> {
                                 child: ClipRRect(
                                   borderRadius: BorderRadius.circular(4),
                                   child: LinearProgressIndicator(
-                                    value: (totalSpending / budget)
-                                        .clamp(0, 1),
+                                    value: budget > 0
+                                        ? (totalSpending / budget).clamp(0, 1)
+                                        : 0,
                                     minHeight: 6,
                                     backgroundColor: Colors.white,
                                     valueColor:
@@ -311,7 +313,9 @@ class _SpendingsCardState extends State<SpendingsCard> {
                                       MainAxisAlignment.center,
                                   children: [
                                     Text(
-                                      '${((totalSpending / budget) * 100).clamp(0, 100).toStringAsFixed(0)}%',
+                                      budget > 0
+                                          ? '${((totalSpending / budget) * 100).clamp(0, 100).toStringAsFixed(0)}%'
+                                          : '0%',
                                       style: const TextStyle(
                                         fontSize: 16,
                                         fontWeight: FontWeight.bold,

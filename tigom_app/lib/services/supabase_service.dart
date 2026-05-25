@@ -122,14 +122,14 @@ static Future<Map<String, dynamic>?> getProfile() async {
 }
 
 static Future<void> updateProfile({
-  required String name,
+  
   required String email,
-  String? phone,
+
 }) async {
    await _client.from('users').update({
-    'name': name,
+    
     'email': email,
-    'phone': phone ?? '',
+    
   }).eq('user_id', currentUserId); 
 }
 
@@ -142,4 +142,77 @@ static Future<void> updatePassword(String newPassword) async {
 static Future<void> logout() async {
   await _client.auth.signOut();
 }
+
+
+// HISTORY / TRANSACTIONS
+static Future<Map<String, String>> getCategoryMap() async {
+  final res = await _client.from('categories').select();
+  final list = List<Map<String, dynamic>>.from(res);
+  // returns { 'Food': 'uuid-here', ... }
+  return {
+    for (final c in list)
+      (c['name'] as String): (c['category_id'] as String)
+  };
+}
+
+static Future<List<Map<String, dynamic>>> getTransactionsByCategory(
+    String categoryName) async {
+  // get category_id first
+  final catRes = await _client
+      .from('categories')
+      .select()
+      .ilike('name', categoryName)
+      .maybeSingle();
+
+  if (catRes == null) return [];
+
+  final categoryId = catRes['category_id'] as String;
+
+  final res = await _client
+      .from('transactions')
+      .select()
+      .eq('user_id', currentUserId)
+      .eq('category_id', categoryId)
+      .order('transaction_date', ascending: false);
+
+  return List<Map<String, dynamic>>.from(res);
+}
+
+static Future<void> saveTransaction({
+  required String transactionId,
+  required String categoryId,
+  required String accountId,
+  required String description,
+  required double amount,
+  required String type,
+}) async {
+  await _client.from('transactions').upsert({
+    'transaction_id': transactionId,
+    'user_id': currentUserId,
+    'account_id': accountId,
+    'category_id': categoryId,
+    'type': type,
+    'amount': amount,
+    'description': description,
+    'transaction_date': DateTime.now().toIso8601String(),
+  });
+}
+
+static Future<void> deleteTransaction(String transactionId) async {
+  await _client
+      .from('transactions')
+      .delete()
+      .eq('transaction_id', transactionId);
+}
+
+static Future<String?> getFirstAccountId() async {
+  final res = await _client
+      .from('accounts')
+      .select('account_id')
+      .eq('user_id', currentUserId)
+      .limit(1)
+      .maybeSingle();
+  return res?['account_id'] as String?;
+}
+
 }

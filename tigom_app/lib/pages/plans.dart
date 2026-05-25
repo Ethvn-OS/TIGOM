@@ -5,6 +5,8 @@ import 'package:tigom_app/models/goal.dart';
 import 'package:tigom_app/widgets/goalwidgets.dart';
 import 'package:tigom_app/services/supabase_service.dart';
 import 'package:uuid/uuid.dart';
+import 'package:tigom_app/pages/history.dart';
+
 
 class PlansPage extends StatefulWidget {
   const PlansPage({super.key, List<Goal>? goals}) : _initialGoals = goals;
@@ -473,6 +475,7 @@ class _PlansPageState extends State<PlansPage> {
       backgroundColor: const Color(0xFFfff9e9),
       appBar: AppBar(
         toolbarHeight: 100,
+        automaticallyImplyLeading: false,
         title: const Text(
           'TIGOM',
           style: TextStyle(
@@ -537,6 +540,9 @@ class _PlansPageState extends State<PlansPage> {
             Navigator.pushReplacement(
               context,
               MaterialPageRoute(builder: (_) => const EditProfilePage()),
+            );
+          } else if (index == 2){
+            Navigator.pushReplacement(context, MaterialPageRoute(builder: (_)=> const HistoryPage()), 
             );
           }
 
